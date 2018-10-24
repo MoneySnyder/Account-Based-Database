@@ -14,7 +14,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
-
 // File Handling Packages
 import java.io.IOException;
 import java.io.File;
@@ -47,11 +46,16 @@ public class PartneredApplication {
 
     // Main Method
     public static void main(String[] args) {
+
+      // Creates account if one is not created.
         String computerUsername = System.getProperty("user.name");
-        verifyCredentials(computerUsername);
+        boolean accountExists = verifyCredentials(computerUsername);
+
+      // Prompt UI in both cases.
+
     }
 
-    // Prerequisite Verification / 4-Digit Pin Code
+    // Prerequisite Verification / 4-Digit Pin Code.
     public static boolean verifyCredentials(String username, String pin){
         for(int i=0; i<(StoredUsernames.size()); i++){
             if(username.equals((String)StoredUsernames.get(i))){
@@ -73,4 +77,30 @@ public class PartneredApplication {
         return false;
     }
 
+    // Verify Existance in case of duplicate prevention.
+    public static boolean verifyExistance(String username){
+        for(int i=0; i<(StoredUsernames.size()); i++){
+          if(username.equals((String)StoredUsernames.get(i))){
+            //System.out.println("Account Exists.");
+            return true;
+          }
+          else{
+            //System.out.println("Account does not exist.");
+            return false;
+          }
+        }
+        return false;
+      }
+
+    // Function for creating account if account is not already created.
+    public static void createAccount(String username, String pin){
+      boolean existingaccount = verifyExistance(username);
+      if(existingaccount == true){
+        return;
+      }
+      else{
+        StoredUsernames.add(username);
+        StoredPins.add("NoPin");
+      }
+    }
 }
