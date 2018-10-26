@@ -33,21 +33,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 // Encryption Packages
-import java.security.Key;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import javax.crypto.*;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.io.IOException;
+import javax.crypto.KeyGenerator;
+import java.io.UnsupportedEncodingException; 
+import java.security.InvalidKeyException; 
+import java.security.NoSuchAlgorithmException; 
+import java.security.spec.InvalidKeySpecException; 
+import javax.crypto.BadPaddingException; 
+import javax.crypto.Cipher; 
+import javax.crypto.IllegalBlockSizeException; 
+import javax.crypto.NoSuchPaddingException; 
+import javax.crypto.SecretKey; 
+import javax.crypto.SecretKeyFactory; 
+import javax.crypto.spec.DESKeySpec; 
 
 /**
  * Group Members
@@ -61,9 +59,10 @@ public class PartneredApplication {
     public static ArrayList<String> StoredUsernames = new ArrayList<String>();
     public static ArrayList<String> StoredPins = new ArrayList<String>();
     public static ArrayList<String> StoredIds = new ArrayList<String>();
+    public static ArrayList<SecretKey> StoredKeys = new ArrayList<SecretKey>();
 
     // Main Method
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
       // Load XML File and create local storage.
         try{
           // Instance a document-builder in order to read file.
@@ -96,8 +95,17 @@ public class PartneredApplication {
 
       // Creates account if one is not created.
         String computerUsername = System.getProperty("user.name");
-        boolean accountExists = verifyCredentials(computerUsername);
-
+        boolean accountExists = verifyExistance(computerUsername);
+        
+      // Encryption Example
+      
+      /* 
+       * SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+       * DesEncrypter encrypter = new DesEncrypter(key);
+       * String encrypted = encrypter.encrypt("1h8f&n101");
+       * String decrypted = encrypter.decrypt(encrypted);
+      */
+      
       // Prompt UI in both cases.
 
     }
@@ -150,44 +158,58 @@ public class PartneredApplication {
         StoredPins.add("NoPin");
       }
     }
-
-    // DES Encryption
-    public String encrypt(String str){
-      try {
-          // Encode the string into bytes using utf-8
-          byte[] utf8 = str.getBytes("UTF8");
-
-          // Encrypt
-          byte[] enc = ecipher.doFinal(utf8);
-
-          // Encode bytes to base64 to get a string
-          return new sun.misc.BASE64Encoder().encode(enc);
-      } catch (javax.crypto.BadPaddingException e) {
-      } catch (IllegalBlockSizeException e) {
-      } catch (UnsupportedEncodingException e) {
-      } catch (java.io.IOException e) {
-      }
-      return null;
-  }
-
-  // DES Decryption
-  public String decrypt(String str) {
-    try {
-        // Decode base64 to get bytes
-        byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
-
-        // Decrypt
-        byte[] utf8 = dcipher.doFinal(dec);
-
-        // Decode using utf-8
-        return new String(utf8, "UTF8");
-    } catch (javax.crypto.BadPaddingException e) {
-    } catch (IllegalBlockSizeException e) {
-    } catch (UnsupportedEncodingException e) {
-    } catch (java.io.IOException e) {
+    
+    // Find XML Node at the Given Element Name.
+    static private Node findFirstNamedElement(Node parent, String tagName){
+        NodeList children = parent.getChildNodes();
+        for (int i = 0, in = children.getLength(); i<in; i++){
+            Node child = children.item(i);
+             if ( child.getNodeType() != Node.ELEMENT_NODE )
+                continue;
+             if ( child.getNodeName().equals(tagName) )
+                return child;
+        }
+        return null;
     }
-    return null;
-  }
-
-
+    
+    // Find the Main Node for the Account
+    static private String getAccountData(Node parent){
+        StringBuilder text = new StringBuilder();
+        if(parent == null)
+            return text.toString();
+        NodeList children = parent.getChildNodes();
+        for(int k = 0, kn = children.getLength(); k < kn; k++){
+            Node child = children.item(k);
+            if(child.getNodeType() != Node.TEXT_NODE)
+                break;
+            text.append(child.getNodeValue());
+        }
+        return text.toString();
+    }
+    
+    // Clear Local Data for Updating.
+    public static void removeAll(Node node, short nodeType, String name, Object id) {
+        
+        if (node.getNodeType() == nodeType && (name == null || node.getNodeName().equals(name))) {
+          Element acID = (Element)node;
+          if(acID.getAttribute("id").equals(id)){
+            node.getParentNode().removeChild(node);
+            }
+        } else {
+          NodeList list = node.getChildNodes();
+          for (int i = 0; i < list.getLength(); i++) {
+            removeAll(list.item(i), nodeType, name, id);
+          }
+        }
+    }
+    
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+       public static String randomAlphaNumeric(int count) {
+           StringBuilder builder = new StringBuilder();
+       while (count-- != 0) {
+           int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+           builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+       }
+       return builder.toString();
+    }
 }
