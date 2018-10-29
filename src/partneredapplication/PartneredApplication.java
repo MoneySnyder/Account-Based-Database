@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
+
 // File Handling Packages
 import java.io.IOException;
 import java.io.File;
@@ -35,17 +36,17 @@ import org.xml.sax.SAXException;
 // Encryption Packages
 import java.io.IOException;
 import javax.crypto.KeyGenerator;
-import java.io.UnsupportedEncodingException; 
-import java.security.InvalidKeyException; 
-import java.security.NoSuchAlgorithmException; 
-import java.security.spec.InvalidKeySpecException; 
-import javax.crypto.BadPaddingException; 
-import javax.crypto.Cipher; 
-import javax.crypto.IllegalBlockSizeException; 
-import javax.crypto.NoSuchPaddingException; 
-import javax.crypto.SecretKey; 
-import javax.crypto.SecretKeyFactory; 
-import javax.crypto.spec.DESKeySpec; 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 /**
  * Group Members
@@ -96,17 +97,24 @@ public class PartneredApplication {
       // Creates account if one is not created.
         String computerUsername = System.getProperty("user.name");
         boolean accountExists = verifyExistance(computerUsername);
-        
+
       // Encryption Example
-      
-      /* 
+
+      /*
        * SecretKey key = KeyGenerator.getInstance("DES").generateKey();
        * DesEncrypter encrypter = new DesEncrypter(key);
        * String encrypted = encrypter.encrypt("1h8f&n101");
        * String decrypted = encrypter.decrypt(encrypted);
       */
-      
+
       // Prompt UI in both cases.
+        if(accountExists){
+            System.out.println("Account found, prompting PIN.");
+        }
+        else{
+            System.out.println("Account not found, prompting creation.");
+            NewAccount.displayGUI();
+        }
 
     }
 
@@ -158,7 +166,7 @@ public class PartneredApplication {
         StoredPins.add("NoPin");
       }
     }
-    
+
     // Find XML Node at the Given Element Name.
     static private Node findFirstNamedElement(Node parent, String tagName){
         NodeList children = parent.getChildNodes();
@@ -171,7 +179,7 @@ public class PartneredApplication {
         }
         return null;
     }
-    
+
     // Find the Main Node for the Account
     static private String getAccountData(Node parent){
         StringBuilder text = new StringBuilder();
@@ -186,10 +194,10 @@ public class PartneredApplication {
         }
         return text.toString();
     }
-    
+
     // Clear Local Data for Updating.
     public static void removeAll(Node node, short nodeType, String name, Object id) {
-        
+
         if (node.getNodeType() == nodeType && (name == null || node.getNodeName().equals(name))) {
           Element acID = (Element)node;
           if(acID.getAttribute("id").equals(id)){
@@ -202,7 +210,7 @@ public class PartneredApplication {
           }
         }
     }
-    
+
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
        public static String randomAlphaNumeric(int count) {
            StringBuilder builder = new StringBuilder();
