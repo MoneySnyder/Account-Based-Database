@@ -110,6 +110,7 @@ public class PartneredApplication {
       // Prompt UI in both cases.
         if(accountExists){
             System.out.println("Account found, prompting PIN.");
+            ExistingAccount.displayGUI();
         }
         else{
             System.out.println("Account not found, prompting creation.");
@@ -163,7 +164,12 @@ public class PartneredApplication {
       }
       else{
         StoredUsernames.add(username);
-        StoredPins.add("NoPin");
+        if(pin != null){
+          StoredPins.add(pin);
+        }
+        else{
+          StoredPins.add("NoPin");
+        }
       }
     }
 

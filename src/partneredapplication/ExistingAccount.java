@@ -4,10 +4,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
 // @author cs.evsnyder cs.cwberg
-public class NewAccount extends javax.swing.JFrame {
+public class ExistingAccount extends javax.swing.JFrame {
 
     // Creates new form NewAccount
-    public NewAccount() {
+    public ExistingAccount() {
         initComponents();
     }
 
@@ -37,11 +37,11 @@ public class NewAccount extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
-        jLabel1.setText("Create Account");
+        jLabel1.setText("Account Login");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Used for Two-Factor Authentication");
+        jLabel4.setText("Login with 4-digit PIN");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -75,17 +75,12 @@ public class NewAccount extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(51, 51, 51));
-        jButton3.setText("Create PIN");
+        jButton3.setText("Login");
         jButton3.setBorder(null);
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -144,10 +139,17 @@ public class NewAccount extends javax.swing.JFrame {
         String PIN2 = new String(jPasswordField2.getPassword());
         String computerUsername = System.getProperty("user.name");
         if(PIN1.equals(PIN2)){
-            JOptionPane.showMessageDialog(null, "Account Created.");
-            PartneredApplication.createAccount(computerUsername, new String(jPasswordField1.getPassword()));
-            ExistingAccount.displayGUI();
-            setVisible(false);
+            boolean correctCredentials = PartneredApplication.verifyCredentials(computerUsername, PIN1);
+            if(correctCredentials){
+                MainWindow.displayGUI();
+                setVisible(false);
+            }
+            else{
+               JOptionPane.showMessageDialog(null,
+               "Incorrect PIN.",
+               "Account Error",
+               JOptionPane.ERROR_MESSAGE);
+            }
         }
         else{
             JOptionPane.showMessageDialog(null,
@@ -156,10 +158,6 @@ public class NewAccount extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3MouseClicked
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,32 +173,27 @@ public class NewAccount extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExistingAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExistingAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExistingAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExistingAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewAccount().setVisible(true);
+                new ExistingAccount().setVisible(true);
             }
         });
     }
     // Display the gui
     public static void displayGUI(){
         java.awt.EventQueue.invokeLater(() -> {
-            new NewAccount().setVisible(true);
-        });
-    }
-    
-    public static void hideGUI(){
-        java.awt.EventQueue.invokeLater(() -> {
-            new NewAccount().setVisible(false);
+            new ExistingAccount().setVisible(true);
         });
     }
 
