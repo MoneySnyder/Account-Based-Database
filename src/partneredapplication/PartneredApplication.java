@@ -61,6 +61,10 @@ public class PartneredApplication {
     public static ArrayList<String> StoredPins = new ArrayList<String>();
     public static ArrayList<String> StoredIds = new ArrayList<String>();
     public static ArrayList<SecretKey> StoredKeys = new ArrayList<SecretKey>();
+    public static ArrayList<String> StoredActClasses = new ArrayList<String>();
+    public static ArrayList<String> StoredActUsernames = new ArrayList<String>();
+    public static ArrayList<String> StoredActPasswords = new ArrayList<String>();
+    public static ArrayList<String> StoredActExtras = new ArrayList<String>();
 
     // Main Method
     public static void main(String[] args) throws Exception {
@@ -141,6 +145,36 @@ public class PartneredApplication {
         return false;
     }
 
+    // Add account data entry.
+    public static void addActEntry(String username, String actclass, String actusername, String actpassword, String actextras){
+      if(StoredActExtras.get(returnIndex(username)).equals("")){
+        StoredActExtras.set(returnIndex(username), actextras);
+        StoredActClasses.set(returnIndex(username), actclass);
+        StoredActUsernames.set(returnIndex(username), actusername);
+        StoredActPasswords.set(returnIndex(username), actpassword);
+      }
+      else{
+        StoredActExtras.set(returnIndex(username), StoredActExtras.get(returnIndex(username))+"\n"+actextras);
+        StoredActClasses.set(returnIndex(username), StoredActClasses.get(returnIndex(username))+"\n"+actclass);
+        StoredActUsernames.set(returnIndex(username), StoredActUsernames.get(returnIndex(username))+"\n"+actusername);
+        StoredActPasswords.set(returnIndex(username), StoredActPasswords.get(returnIndex(username))+"\n"+actpassword);
+      }
+    }
+
+    public static int returnIndex(String username){
+      for(int i=0; i<(StoredUsernames.size()); i++){
+        if(username.equals((String)StoredUsernames.get(i))){
+          //System.out.println("Account Exists.");
+          return i;
+        }
+        else{
+          //System.out.println("Account does not exist.");
+          return i;
+        }
+      }
+      return 0;
+    }
+
     // Verify Existance in case of duplicate prevention.
     public static boolean verifyExistance(String username){
         for(int i=0; i<(StoredUsernames.size()); i++){
@@ -166,9 +200,17 @@ public class PartneredApplication {
         StoredUsernames.add(username);
         if(pin != null){
           StoredPins.add(pin);
+          StoredActUsernames.add("");
+          StoredActPasswords.add("");
+          StoredActClasses.add("");
+          StoredActExtras.add("");
         }
         else{
           StoredPins.add("NoPin");
+          StoredActUsernames.add("");
+          StoredActPasswords.add("");
+          StoredActClasses.add("");
+          StoredActExtras.add("");
         }
       }
     }
