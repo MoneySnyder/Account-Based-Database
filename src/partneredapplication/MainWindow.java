@@ -73,6 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jTextArea2.setBorder(null);
         jTextArea2.setFocusable(false);
+        jTextArea2.setOpaque(false);
         jScrollPane4.setViewportView(jTextArea2);
 
         jTextArea3.setEditable(false);
@@ -82,6 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTextArea3.setRows(5);
         jTextArea3.setBorder(null);
         jTextArea3.setFocusable(false);
+        jTextArea3.setOpaque(false);
         jScrollPane5.setViewportView(jTextArea3);
 
         jButton3.setBackground(new java.awt.Color(153, 204, 255));
@@ -250,16 +252,42 @@ public class MainWindow extends javax.swing.JFrame {
         String newAccountUsername = JOptionPane.showInputDialog("What is the username?");
         String newAccountPassword = JOptionPane.showInputDialog("What is the password?");
         int showextras = JOptionPane.showConfirmDialog(null, "Would you like to add extra information?", "Please Select",JOptionPane.YES_NO_OPTION);
+        
         if(showextras==0){
             newAccountExtras = JOptionPane.showInputDialog("What is the extra information?");
         }
         else{
             newAccountExtras = "";
+        
         }
         PartneredApplication.addActEntry(computerusername, newAccountClass, newAccountUsername, newAccountPassword, newAccountExtras);
         System.out.println("Entry Created.");
-        jTextArea3.setText(PartneredApplication.StoredActUsernames.get(PartneredApplication.returnIndex(computerusername)));
-        jTextArea2.setText(PartneredApplication.StoredActPasswords.get(PartneredApplication.returnIndex(computerusername)));
+        
+        String[] UsernameData = PartneredApplication.returnSplitInformation(computerusername, "usernames");
+        String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
+        String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
+        String[] ExtraData = PartneredApplication.returnSplitInformation(computerusername, "extras");
+        
+        String actCachedData ="";
+        for(int i=0;i<UsernameData.length;i++){
+            actCachedData = actCachedData +"\n"+ ClassData[i]+" | "+UsernameData[i];
+        }
+       String actCachedData2 ="";
+        for(int i=0;i<PasswordData.length;i++){
+            try {
+            if(ExtraData[i]!=null){
+                actCachedData2 = actCachedData2 +"\n"+ PasswordData[i]+" | "+ExtraData[i];
+            }
+            else{
+                actCachedData2 = actCachedData2 +"\n"+ PasswordData[i];
+            }
+            } catch(Exception e) {
+                System.out.println("error");
+            }
+        }
+        
+      jTextArea2.setText(actCachedData2);
+      jTextArea3.setText(actCachedData);
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

@@ -124,29 +124,30 @@ public class PartneredApplication {
     }
 
     // Split compiled information into an array.
-    public static String[] returnSplitInformation(String username, String class){
-        if(class.equals("usernames")){
+    public static String[] returnSplitInformation(String username, String aclass){
+        if(aclass.equals("usernames")){
             String compiledData = StoredActUsernames.get(returnIndex(username));
             String[] splitData = compiledData.split("\n");
             return splitData;
         }
-        if(class.equals("passwords")){
+        if(aclass.equals("passwords")){
             String compiledData = StoredActPasswords.get(returnIndex(username));
             String[] splitData = compiledData.split("\n");
             return splitData;
         }
-        if(class.equals("classes")){
+        if(aclass.equals("classes")){
             String compiledData = StoredActClasses.get(returnIndex(username));
             String[] splitData = compiledData.split("\n");
             return splitData;
         }
-        if(class.equals("extras")){
+        if(aclass.equals("extras")){
             String compiledData = StoredActExtras.get(returnIndex(username));
             String[] splitData = compiledData.split("\n");
             return splitData;
         }
+        return null;
     }
-    
+
     // Prerequisite Verification / 4-Digit Pin Code.
     public static boolean verifyCredentials(String username, String pin){
         for(int i=0; i<(StoredUsernames.size()); i++){
