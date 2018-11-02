@@ -290,7 +290,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        
+
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -351,9 +351,9 @@ public class MainWindow extends javax.swing.JFrame {
             String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
             String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
             String[] ExtraData = PartneredApplication.returnSplitInformation(computerusername, "extras");
-            
+
             String input = (String) JOptionPane.showInputDialog(null, "Choose which entry you would like to remove.",
-            "Remove Entry", JOptionPane.QUESTION_MESSAGE, null, 
+            "Remove Entry", JOptionPane.QUESTION_MESSAGE, null,
             choices, // Array of choices
             choices[0]); // Initial choice
             int reference = Arrays.asList(choices).indexOf(input);
@@ -362,7 +362,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch(Exception e) {
                 System.out.println("error");
         }
-        
+
         String[] UsernameData = PartneredApplication.returnSplitInformation(computerusername, "usernames");
         String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
         String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
