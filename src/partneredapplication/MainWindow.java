@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package partneredapplication;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         jLabel9.setText("Welcome, "+System.getProperty("user.name"));
     }
-    
+
     String computerusername = System.getProperty("user.name");
     /**
      * This method is called from within the constructor to initialize the form.
@@ -239,7 +240,48 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        try {
+            String[] choices = PartneredApplication.returnSplitInformation(computerusername, "usernames");
+            String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
+            String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
+            String[] ExtraData = PartneredApplication.returnSplitInformation(computerusername, "extras");
+            
+            String input = (String) JOptionPane.showInputDialog(null, "Choose which entry you would like to remove.",
+            "Remove Entry", JOptionPane.QUESTION_MESSAGE, null, 
+            choices, // Array of choices
+            choices[0]); // Initial choice
+            int reference = Arrays.asList(choices).indexOf(input);
+            PartneredApplication.removeActEntry(computerusername,ClassData[reference], input, PasswordData[reference], ExtraData[reference]);
+            System.out.println("Entry Removed.");
+        } catch(Exception e) {
+                System.out.println("error");
+        }
         
+        String[] UsernameData = PartneredApplication.returnSplitInformation(computerusername, "usernames");
+        String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
+        String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
+        String[] ExtraData = PartneredApplication.returnSplitInformation(computerusername, "extras");
+
+        String actCachedData ="";
+        for(int i=0;i<UsernameData.length;i++){
+            actCachedData = actCachedData +"\n"+ ClassData[i]+" | "+UsernameData[i];
+        }
+        String actCachedData2 ="";
+         for(int i=0;i<PasswordData.length;i++){
+             try {
+             if(ExtraData[i]!=null){
+                 actCachedData2 = actCachedData2 +"\n"+ PasswordData[i]+" | "+ExtraData[i];
+             }
+             else{
+                 actCachedData2 = actCachedData2 +"\n"+ PasswordData[i];
+             }
+             } catch(Exception e) {
+                 System.out.println("error");
+             }
+         }
+
+       jTextArea2.setText(actCachedData2);
+       jTextArea3.setText(actCachedData);
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -252,22 +294,22 @@ public class MainWindow extends javax.swing.JFrame {
         String newAccountUsername = JOptionPane.showInputDialog("What is the username?");
         String newAccountPassword = JOptionPane.showInputDialog("What is the password?");
         int showextras = JOptionPane.showConfirmDialog(null, "Would you like to add extra information?", "Please Select",JOptionPane.YES_NO_OPTION);
-        
+
         if(showextras==0){
             newAccountExtras = JOptionPane.showInputDialog("What is the extra information?");
         }
         else{
-            newAccountExtras = "";
-        
+            newAccountExtras = " ";
+
         }
         PartneredApplication.addActEntry(computerusername, newAccountClass, newAccountUsername, newAccountPassword, newAccountExtras);
         System.out.println("Entry Created.");
-        
+
         String[] UsernameData = PartneredApplication.returnSplitInformation(computerusername, "usernames");
         String[] ClassData = PartneredApplication.returnSplitInformation(computerusername, "classes");
         String[] PasswordData = PartneredApplication.returnSplitInformation(computerusername, "passwords");
         String[] ExtraData = PartneredApplication.returnSplitInformation(computerusername, "extras");
-        
+
         String actCachedData ="";
         for(int i=0;i<UsernameData.length;i++){
             actCachedData = actCachedData +"\n"+ ClassData[i]+" | "+UsernameData[i];
@@ -285,7 +327,7 @@ public class MainWindow extends javax.swing.JFrame {
                 System.out.println("error");
             }
         }
-        
+
       jTextArea2.setText(actCachedData2);
       jTextArea3.setText(actCachedData);
     }//GEN-LAST:event_jButton4MouseClicked
@@ -301,7 +343,7 @@ public class MainWindow extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -328,14 +370,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
-    
+
      public static void displayGUI(){
         java.awt.EventQueue.invokeLater(() -> {
             new MainWindow().setVisible(true);
         });
     }
-    
-     
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
