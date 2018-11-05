@@ -9,6 +9,18 @@ import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
+import java.awt.AWTException;
+import java.awt.FlowLayout;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+ 
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 /**
  *
  * @author cs.evsnyder
@@ -232,7 +244,8 @@ public class ScreenshotWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-
+        MainWindow.displayGUI();
+        setVisible(false);
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -240,7 +253,24 @@ public class ScreenshotWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-     
+        try {
+                setVisible(false);
+                Thread.sleep(120); 
+                Robot robot = new Robot();
+                String format = "jpg";
+                String fileName = "src\\partneredapplication\\screenshots" + PartneredApplication.randomAlphaNumeric(5)+ "." + format;
+
+                Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+                BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+                ImageIO.write(screenFullImage, format, new File(fileName));
+
+                System.out.println("A full screenshot saved!");
+                setVisible(true);
+            } catch (AWTException | IOException ex) {
+                System.err.println(ex);
+            } catch (InterruptedException ex) {
+            Logger.getLogger(ScreenshotWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
