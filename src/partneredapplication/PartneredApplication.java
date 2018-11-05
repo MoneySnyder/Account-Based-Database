@@ -122,24 +122,24 @@ public class PartneredApplication {
         }
 
     }
-    
+
     public static void removeActEntry(String username, String actclass, String actusername, String actpassword, String actextras){
         String previousActExtras = StoredActExtras.get(returnIndex(username));
         String previousActUsernames = StoredActUsernames.get(returnIndex(username));
         String previousActPasswords = StoredActPasswords.get(returnIndex(username));
         String previousActClasses = StoredActClasses.get(returnIndex(username));
-        
+
         String editedActExtras = previousActExtras.replaceAll(actextras+"\n", "");
         String editedActUsernames = previousActUsernames.replaceAll(actusername+"\n", "");
         String editedActPasswords = previousActPasswords.replaceAll(actpassword+"\n", "");
         String editedActClasses = previousActClasses.replaceAll(actclass+"\n", "");
-        
+
         StoredActExtras.set(returnIndex(username), editedActExtras);
         StoredActClasses.set(returnIndex(username), editedActClasses);
         StoredActUsernames.set(returnIndex(username), editedActUsernames);
         StoredActPasswords.set(returnIndex(username), editedActPasswords);
     }
-    
+
     // Split compiled information into an array.
     public static String[] returnSplitInformation(String username, String aclass){
         if(aclass.equals("usernames")){
