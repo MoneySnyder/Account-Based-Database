@@ -10,13 +10,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
 import java.awt.AWTException;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javafx.embed.swing.SwingFXUtils;
  
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -30,8 +41,9 @@ public class ScreenshotWindow extends javax.swing.JFrame {
     /**
      * Creates new form MainWindow
      */
-    public ScreenshotWindow() {
+    public ScreenshotWindow() throws InterruptedException {
         initComponents();
+        updateScreenshots();
         jLabel9.setText("Welcome, "+System.getProperty("user.name"));
     }
 
@@ -51,7 +63,11 @@ public class ScreenshotWindow extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -86,9 +102,25 @@ public class ScreenshotWindow extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setLayout(new java.awt.GridLayout(10, 3));
+        jScrollPane1.setViewportView(jPanel2);
+
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 102, 153));
         jLabel11.setText("Screenshots");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -97,10 +129,20 @@ public class ScreenshotWindow extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(7, 7, 7)))
+                        .addContainerGap(228, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +150,13 @@ public class ScreenshotWindow extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addContainerGap(110, Short.MAX_VALUE))
         );
 
@@ -258,7 +304,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
                 Thread.sleep(120); 
                 Robot robot = new Robot();
                 String format = "jpg";
-                String fileName = "src\\partneredapplication\\screenshots" + PartneredApplication.randomAlphaNumeric(5)+ "." + format;
+                String fileName = "src/screenshots/" + PartneredApplication.randomAlphaNumeric(5)+ "." + format;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
@@ -270,7 +316,12 @@ public class ScreenshotWindow extends javax.swing.JFrame {
                 System.err.println(ex);
             } catch (InterruptedException ex) {
             Logger.getLogger(ScreenshotWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
+            try {
+                updateScreenshots();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ScreenshotWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -316,16 +367,61 @@ public class ScreenshotWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ScreenshotWindow().setVisible(true);
+                try {
+                    new ScreenshotWindow().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ScreenshotWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
      public static void displayGUI(){
         java.awt.EventQueue.invokeLater(() -> {
-            new ScreenshotWindow().setVisible(true);
+            try {
+                new ScreenshotWindow().setVisible(true);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ScreenshotWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
+
+    public static ArrayList<JButton> buttonList = new ArrayList<>();
+    public static ArrayList<String> results = new ArrayList<>();
+    
+    public ArrayList<JButton> updateScreenshots() throws InterruptedException{
+        Container buttonLayout = jPanel2;
+        
+        File[] files = new File("src/screenshots").listFiles();
+        //If this pathname does not denote a directory, then listFiles() returns null. 
+
+        for (File file : files) {
+            if (file.isFile()&&!(results.contains(file.getName()))) {
+                results.add(file.getName());
+                ImageIcon image = new ImageIcon("src/screenshots/"+file.getName());
+                Image icon = image.getImage().getScaledInstance(150, 84, Image.SCALE_SMOOTH);
+                image.setImage(icon);
+                JButton button = new JButton();
+                button.setIcon(image);
+                button.setName(file.getName());
+                button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent ae) {
+                        ImageIcon image = new ImageIcon("src/screenshots/"+file.getName());
+                        Image icon = image.getImage().getScaledInstance(333, 244, Image.SCALE_SMOOTH);
+                        image.setImage(icon);
+                        jLabel1.setIcon(image);
+                        jLabel2.setText(file.getName());
+                    }
+                });
+                
+                buttonList.add(button);
+                buttonLayout.add(button);
+            }
+        }
+        System.out.println(Integer.toString(results.size())+" screenshots found.");
+        return buttonList;
+    }
+ 
 
 
 
@@ -334,10 +430,14 @@ public class ScreenshotWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
