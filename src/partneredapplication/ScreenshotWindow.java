@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javafx.embed.swing.SwingFXUtils;
- 
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -301,7 +301,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         try {
                 setVisible(false);
-                Thread.sleep(120); 
+                Thread.sleep(120);
                 Robot robot = new Robot();
                 String format = "jpg";
                 String fileName = "src/screenshots/" + PartneredApplication.randomAlphaNumeric(5)+ "." + format;
@@ -388,12 +388,12 @@ public class ScreenshotWindow extends javax.swing.JFrame {
 
     public static ArrayList<JButton> buttonList = new ArrayList<>();
     public static ArrayList<String> results = new ArrayList<>();
-    
+
     public ArrayList<JButton> updateScreenshots() throws InterruptedException{
         Container buttonLayout = jPanel2;
-        
+
         File[] files = new File("src/screenshots").listFiles();
-        //If this pathname does not denote a directory, then listFiles() returns null. 
+        //If this pathname does not denote a directory, then listFiles() returns null.
 
         for (File file : files) {
             if (file.isFile()&&!(results.contains(file.getName()))) {
@@ -413,7 +413,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
                         jLabel2.setText(file.getName());
                     }
                 });
-                
+
                 buttonList.add(button);
                 buttonLayout.add(button);
             }
@@ -421,7 +421,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
         System.out.println(Integer.toString(results.size())+" screenshots found.");
         return buttonList;
     }
- 
+
 
 
 
