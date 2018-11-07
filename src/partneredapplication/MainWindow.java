@@ -95,6 +95,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton4.setText("Add Entry");
         jButton4.setBorder(null);
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setFocusable(false);
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton4MouseClicked(evt);
@@ -112,6 +113,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton5.setText("Remove");
         jButton5.setBorder(null);
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setFocusable(false);
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
@@ -185,6 +187,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton3.setText("Account Data");
         jButton3.setBorder(null);
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setFocusable(false);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -203,6 +206,7 @@ public class MainWindow extends javax.swing.JFrame {
         jButton6.setActionCommand("");
         jButton6.setBorder(null);
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.setFocusable(false);
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton6MouseClicked(evt);

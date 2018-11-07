@@ -127,6 +127,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonimages/upload.png"))); // NOI18N
         jButton2.setBorder(null);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setFocusable(false);
         jButton2.setIconTextGap(0);
         jButton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
@@ -136,6 +137,7 @@ public class ScreenshotWindow extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonimages/remove.png"))); // NOI18N
         jButton5.setBorder(null);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.setFocusable(false);
         jButton5.setIconTextGap(0);
         jButton5.setMargin(new java.awt.Insets(2, 5, 2, 5));

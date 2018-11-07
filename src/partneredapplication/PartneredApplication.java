@@ -68,7 +68,11 @@ public class PartneredApplication {
 
     // Main Method
     public static void main(String[] args) throws Exception {
-      // Load XML File and create local storage.
+        // Show Loading Status UI
+        ServerConnect.displayGUI();
+        // Pull XML File from SQL Server and save locally.
+        
+        // Load XML File and create local storage.
         try{
           // Instance a document-builder in order to read file.
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -112,7 +116,7 @@ public class PartneredApplication {
       */
 
       // Prompt UI in both cases.
-        if(accountExists){
+      /*  if(accountExists){
             System.out.println("Account found, prompting PIN.");
             ExistingAccount.displayGUI();
         }
@@ -120,6 +124,7 @@ public class PartneredApplication {
             System.out.println("Account not found, prompting creation.");
             NewAccount.displayGUI();
         }
+       */
 
     }
 
