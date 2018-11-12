@@ -40,6 +40,12 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -56,6 +62,7 @@ import javax.crypto.spec.DESKeySpec;
 
 public class PartneredApplication {
 
+    public static String computerusername = System.getProperty("user.name");
     // Account Information Database
     public static ArrayList<String> StoredUsernames = new ArrayList<String>();
     public static ArrayList<String> StoredPins = new ArrayList<String>();
@@ -70,6 +77,47 @@ public class PartneredApplication {
     public static void main(String[] args) throws Exception {
         // Show Loading Status UI
         ServerConnect.displayGUI();
+        
+        // Connect to SQL Server
+        try{
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            String db_url      = "jdbc:mysql://den1.mysql6.gear.host/csaver";
+            String db_username = "csaver";
+            String db_password = "Hi2T_Tb?fZV6";
+            Connection con = DriverManager.getConnection(db_url, db_username, db_password);
+            //Connection con = DriverManager.getConnection("jdbc:mysql://den1.mysql6.gear.host" + "usercsaver&password=Hi2T_Tb?fZV6&autoReconnect=true&failOverReadOnly=false&maxReconnects=10");
+            String query = "SELECT * FROM accountdata";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            boolean accountFound = false;
+            
+            while(rs.next()){
+               String currentAccount = rs.getString("username");
+               if(currentAccount.equals(computerusername)){
+                   accountFound = true;
+                   break;
+               }
+            }
+            
+            if(accountFound){
+                Thread.sleep(240);
+                ServerConnect.hideGUI();
+                System.out.println("Account found, prompting PIN.");
+                ExistingAccount.displayGUI();
+            }
+            else{
+                Thread.sleep(240);
+                ServerConnect.hideGUI();
+                System.out.println("Account not found, prompting creation.");
+                NewAccount.displayGUI();
+            }
+            con.close();
+        }
+        catch(ClassNotFoundException | IllegalAccessException | InstantiationException | InterruptedException | SQLException e){
+            e.printStackTrace();
+        }
+        
+  
         // Pull XML File from SQL Server and save locally.
         
         // Load XML File and create local storage.
@@ -102,10 +150,6 @@ public class PartneredApplication {
             e.printStackTrace();
         }
 
-      // Creates account if one is not created.
-        String computerUsername = System.getProperty("user.name");
-        boolean accountExists = verifyExistance(computerUsername);
-
       // Encryption Example
 
       /*
@@ -115,16 +159,23 @@ public class PartneredApplication {
        * String decrypted = encrypter.decrypt(encrypted);
       */
 
-      // Prompt UI in both cases.
-      /*  if(accountExists){
+      /*
+          ServerConnect.hideGUI();
+        
+          // Creates account if one is not created.
+          String computerUsername = System.getProperty("user.name");
+          boolean accountExists = verifyExistance(computerUsername);
+          
+           // Prompt UI in both cases.
+          if(accountExists){
             System.out.println("Account found, prompting PIN.");
             ExistingAccount.displayGUI();
-        }
-        else{
+          }
+          else{
             System.out.println("Account not found, prompting creation.");
             NewAccount.displayGUI();
-        }
-       */
+          }
+      */
 
     }
 
@@ -315,4 +366,5 @@ public class PartneredApplication {
        }
        return builder.toString();
     }
+      
 }
