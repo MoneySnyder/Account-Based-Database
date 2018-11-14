@@ -61,7 +61,7 @@ import javax.crypto.spec.DESKeySpec;
  */
 
 public class PartneredApplication {
-
+ 
     public static String computerusername = System.getProperty("user.name");
     // Account Information Database
     public static ArrayList<String> StoredUsernames = new ArrayList<String>();
@@ -72,14 +72,13 @@ public class PartneredApplication {
     public static ArrayList<String> StoredActUsernames = new ArrayList<String>();
     public static ArrayList<String> StoredActPasswords = new ArrayList<String>();
     public static ArrayList<String> StoredActExtras = new ArrayList<String>();
-
+    public static boolean accountFound = false;  
+    
     // Main Method
     public static void main(String[] args) throws Exception {
         // Show Loading Status UI
         ServerConnect.displayGUI();
-        
-        // Connect to SQL Server
-        try{
+         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String db_url      = "jdbc:mysql://den1.mysql6.gear.host/csaver";
             String db_username = "csaver";
@@ -89,7 +88,6 @@ public class PartneredApplication {
             String query = "SELECT * FROM accountdata";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
-            boolean accountFound = false;
             
             while(rs.next()){
                String currentAccount = rs.getString("username");
@@ -102,6 +100,7 @@ public class PartneredApplication {
             if(accountFound){
                 Thread.sleep(240);
                 ServerConnect.hideGUI();
+                
                 System.out.println("Account found, prompting PIN.");
                 ExistingAccount.displayGUI();
             }
@@ -116,8 +115,6 @@ public class PartneredApplication {
         catch(ClassNotFoundException | IllegalAccessException | InstantiationException | InterruptedException | SQLException e){
             e.printStackTrace();
         }
-        
-  
         // Pull XML File from SQL Server and save locally.
         
         // Load XML File and create local storage.
@@ -178,6 +175,8 @@ public class PartneredApplication {
       */
 
     }
+    //Hide previous UI
+   
 
     public static void removeActEntry(String username, String actclass, String actusername, String actpassword, String actextras){
         String previousActExtras = StoredActExtras.get(returnIndex(username));
@@ -366,5 +365,4 @@ public class PartneredApplication {
        }
        return builder.toString();
     }
-      
 }
