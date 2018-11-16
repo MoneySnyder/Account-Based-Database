@@ -3,7 +3,9 @@ A group based project that solves a problem.
 
 ## Authors:
 s.evsnyder
+> Software Development and Database Structuring
 s.cwberg
+> Webpage Design
 
 ## Information:
 CSaver is an account database system created in order to help people keep track of their passwords.
