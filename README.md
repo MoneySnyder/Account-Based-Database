@@ -13,4 +13,3 @@ Release Version:
 
 Server Information:
 Server is currently hosted on GearHost and is running smoothly, if you experience connection errors, please contact a GearHost admin.
-/
