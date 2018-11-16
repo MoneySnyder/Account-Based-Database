@@ -4,6 +4,7 @@ A group based project that solves a problem.
 ## Authors:
 s.evsnyder
 > Software Development and Database Structuring
+
 s.cwberg
 > Webpage Design
 
