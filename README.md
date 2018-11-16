@@ -1,7 +1,5 @@
 # Account-Based-Database
 A group based project that solves a problem.
-/**
-
  ____     ____                                      
 /\  _`\  /\  _`\                                    
 \ \ \/\_\\ \,\L\_\     __     __  __     __   _ __  
@@ -22,6 +20,4 @@ Release Version:
 
 Server Information:
 Server is currently hosted on GearHost and is running smoothly, if you experience connection errors, please contact a GearHost admin.
-
-
-**/
+/
