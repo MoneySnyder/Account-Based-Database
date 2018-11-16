@@ -2,10 +2,10 @@
 A group based project that solves a problem.
 
 ## Authors:
-s.evsnyder @MoneySnyder
+s.evsnyder | @MoneySnyder
 > Software Development and Database Structuring
 
-s.cwberg @CalebBerg
+s.cwberg | @CalebBerg
 > Webpage Design
 
 ## Information:
